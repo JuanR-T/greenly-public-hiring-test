@@ -28,11 +28,16 @@ export class FoodProduct extends BaseEntity {
     })
     ingredients: IngredientDto[];
 
+    sanitize() {
+        if (this.unit === "") {
+            throw new Error("Unit cannot be empty");
+        }
+    }
     constructor(props: {
         name: string;
         unit: string;
         ingredients: IngredientDto[];
-        emissionCO2eInKgPerUnit: number;
+        emissionCO2eInKgPerUnit: number | null;
     }) {
         super();
 
@@ -40,5 +45,6 @@ export class FoodProduct extends BaseEntity {
         this.unit = props?.unit;
         this.emissionCO2eInKgPerUnit = props?.emissionCO2eInKgPerUnit;
         this.ingredients = props?.ingredients;
+        this.sanitize();
     }
 }

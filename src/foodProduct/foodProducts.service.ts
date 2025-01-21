@@ -27,11 +27,6 @@ export class FoodProductsService {
                 ingredients,
                 this.carbonEmissionFactorRepository
             );
-        if (emissionCO2eInKgPerUnit === null) {
-            throw new Error(
-                "Emission factor not found for one or more ingredients."
-            );
-        }
 
         const newfoodProduct = this.foodProductRepository.create({
             name,
