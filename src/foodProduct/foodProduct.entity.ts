@@ -1,7 +1,8 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { IngredientDto } from "./dto/get-ingredient.dto";
 
-@Entity("carbon_emission_factors")
-export class CarbonEmissionFactor extends BaseEntity {
+@Entity("food_products")
+export class FoodProduct extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -17,33 +18,33 @@ export class CarbonEmissionFactor extends BaseEntity {
 
     @Column({
         type: "float",
-        nullable: false,
+        nullable: true,
     })
-    emissionCO2eInKgPerUnit: number;
+    emissionCO2eInKgPerUnit: number | null;
 
     @Column({
+        type: "json",
         nullable: false,
     })
-    source: string;
+    ingredients: IngredientDto[];
 
     sanitize() {
-        if (this.source === "") {
-            throw new Error("Source cannot be empty");
+        if (this.unit === "") {
+            throw new Error("Unit cannot be empty");
         }
     }
-
     constructor(props: {
         name: string;
         unit: string;
-        emissionCO2eInKgPerUnit: number;
-        source: string;
+        ingredients: IngredientDto[];
+        emissionCO2eInKgPerUnit: number | null;
     }) {
         super();
 
         this.name = props?.name;
         this.unit = props?.unit;
         this.emissionCO2eInKgPerUnit = props?.emissionCO2eInKgPerUnit;
-        this.source = props?.source;
+        this.ingredients = props?.ingredients;
         this.sanitize();
     }
 }

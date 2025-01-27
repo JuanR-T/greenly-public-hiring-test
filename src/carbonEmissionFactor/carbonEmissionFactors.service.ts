@@ -6,18 +6,18 @@ import { CreateCarbonEmissionFactorDto } from "./dto/create-carbonEmissionFactor
 
 @Injectable()
 export class CarbonEmissionFactorsService {
-  constructor(
-    @InjectRepository(CarbonEmissionFactor)
-    private carbonEmissionFactorRepository: Repository<CarbonEmissionFactor>
-  ) {}
+    constructor(
+        @InjectRepository(CarbonEmissionFactor)
+        private carbonEmissionFactorRepository: Repository<CarbonEmissionFactor>
+    ) {}
 
-  findAll(): Promise<CarbonEmissionFactor[]> {
-    return this.carbonEmissionFactorRepository.find();
-  }
+    findAll(): Promise<CarbonEmissionFactor[]> {
+        return this.carbonEmissionFactorRepository.find();
+    }
 
-  save(
-    carbonEmissionFactor: CreateCarbonEmissionFactorDto[]
-  ): Promise<CarbonEmissionFactor[] | null> {
-    return this.carbonEmissionFactorRepository.save(carbonEmissionFactor);
-  }
+    save(
+        carbonEmissionFactor: CreateCarbonEmissionFactorDto[]
+    ): Promise<CarbonEmissionFactor[] | null> {
+        return this.carbonEmissionFactorRepository.save(carbonEmissionFactor);
+    }
 }
