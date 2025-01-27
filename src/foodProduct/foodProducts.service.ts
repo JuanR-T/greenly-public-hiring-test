@@ -2,9 +2,9 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { CarbonEmissionFactor } from "../carbonEmissionFactor/carbonEmissionFactor.entity";
+import { calculateCarbonEmission } from "../utils/calculateCarbonEmission.utility";
 import { CreateFoodProductDto } from "./dto/create-foodProduct.dto";
 import { FoodProduct } from "./foodProduct.entity";
-import { calculateFoodProductCarbonEmission } from "./foodProduct.utility";
 
 @Injectable()
 export class FoodProductsService {
@@ -22,11 +22,10 @@ export class FoodProductsService {
 
     async save(foodProduct: CreateFoodProductDto): Promise<FoodProduct> {
         const { name, unit, ingredients } = foodProduct;
-        const emissionCO2eInKgPerUnit =
-            await calculateFoodProductCarbonEmission(
-                ingredients,
-                this.carbonEmissionFactorRepository
-            );
+        const emissionCO2eInKgPerUnit = await calculateCarbonEmission(
+            ingredients,
+            this.carbonEmissionFactorRepository
+        );
 
         const newfoodProduct = this.foodProductRepository.create({
             name,
